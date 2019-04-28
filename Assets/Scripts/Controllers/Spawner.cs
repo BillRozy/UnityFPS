@@ -16,7 +16,7 @@ public class Spawner : MonoBehaviour
     {
         if (_enemy == null) {
             _enemy = Instantiate(enemyPrefab) as GameObject;
-            _enemy.transform.position = new Vector3(1, 1, 0);
+            _enemy.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
             float angle = Random.Range(0, 360);
             _enemy.transform.Rotate(0, angle, 0);
         }
