@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionPrefab;
     public float speed = 4f;
     public int damage = 1;
 
@@ -19,6 +20,10 @@ public class Fireball : MonoBehaviour
         if (player != null)
         {
             player.Hurt(damage);
+        }
+        if (explosionPrefab) {
+            GameObject explosion = Instantiate(explosionPrefab);
+            explosion.transform.position = this.transform.position;
         }
         Destroy(this.gameObject);
     }
