@@ -24,7 +24,13 @@ public class Fireball : MonoBehaviour
         if (explosionPrefab) {
             GameObject explosion = Instantiate(explosionPrefab);
             explosion.transform.position = this.transform.position;
+            StartCoroutine(DestroyAfter(explosion, 3));
         }
         Destroy(this.gameObject);
+    }
+
+    IEnumerator DestroyAfter(GameObject what, float seconds) {
+        yield return new WaitForSeconds(seconds);
+        Destroy(what);
     }
 }

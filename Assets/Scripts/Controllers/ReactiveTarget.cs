@@ -6,8 +6,12 @@ public class ReactiveTarget : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public virtual void ReactToHit() {
+    public virtual void ReactToHit(Vector3 hitDirection, float force) {
         WanderingAI behavior = GetComponent<WanderingAI>();
+        Rigidbody rigidBody = GetComponent<Rigidbody>();
+        if (rigidBody) {
+            rigidBody.AddForce(hitDirection * force);
+        }
         if (behavior) {
             behavior.alive = false;
         }
@@ -15,7 +19,6 @@ public class ReactiveTarget : MonoBehaviour
     }
 
     private IEnumerator Die(){
-        transform.Rotate(-90, transform.rotation.y, transform.rotation.z);
         yield return new WaitForSeconds(1.5f);
         Destroy(this.gameObject);
     }

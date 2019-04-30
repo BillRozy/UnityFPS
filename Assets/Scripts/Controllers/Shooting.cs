@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
+    [SerializeField] GameObject bulletPrefab;
+    public float weaponImpulse = 1000f; 
     private Camera _cam;
     // Start is called before the first frame update
     void Start()
@@ -26,16 +28,22 @@ public class Shooting : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             Vector3 point = new Vector3(_cam.pixelWidth / 2, _cam.pixelHeight / 2, 0);
             Ray ray = _cam.ScreenPointToRay(point);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit)) {
-                GameObject hitObj = hit.transform.gameObject;
-                ReactiveTarget target = hitObj.GetComponent<ReactiveTarget>();
-                if (target != null) {
-                    target.ReactToHit();
-                } else {
-                    StartCoroutine(SphereIndicator(hit.point));
-                }
+            if (bulletPrefab) {
+                GameObject bullet = Instantiate(bulletPrefab);
+                bullet.transform.position = _cam.transform.position;
+                bullet.transform.rotation = _cam.transform.rotation;
+                Rigidbody bulletBody = bullet.GetComponent<Rigidbody>();
+                bulletBody.AddForce(ray.direction * weaponImpulse, ForceMode.Acceleration);
             }
+            // if (Physics.Raycast(ray, out hit)) {
+            //     GameObject hitObj = hit.transform.gameObject;
+            //     ReactiveTarget target = hitObj.GetComponent<ReactiveTarget>();
+            //     if (target != null) {
+            //         target.ReactToHit();
+            //     } else {
+            //         StartCoroutine(SphereIndicator(hit.point));
+            //     }
+            // }
         }
     }
 

@@ -46,7 +46,7 @@ public class WanderingAI : MonoBehaviour
                 }
                 if (hitObject.GetComponent<PlayerCharacter>())
                 {
-                    Debug.Log("See player");
+                    // Debug.Log("See player");
                 }
                 else if (hit.distance < obstacleRange) {
                     float angle = Random.Range(-110, 110);
